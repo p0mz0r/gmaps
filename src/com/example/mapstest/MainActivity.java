@@ -1,6 +1,5 @@
 package com.example.mapstest;
 
-import android.app.Activity;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -15,12 +14,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
 
-public class MainActivity extends Activity implements LocationListener, LocationSource {
+public class MainActivity extends MapActivity implements LocationListener, LocationSource {
   static final LatLng HAMBURG = new LatLng(53.558, 9.927);
   static final LatLng KIEL = new LatLng(53.551, 9.993);
   private GoogleMap map;
@@ -33,7 +32,6 @@ public class MainActivity extends Activity implements LocationListener, Location
     setContentView(R.layout.main);
     map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
         .getMap();
-    
     map.setMyLocationEnabled(true);
     locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 400, 1000, this);
@@ -88,6 +86,11 @@ public class MainActivity extends Activity implements LocationListener, Location
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		Toast.makeText(this, "Status changed", Toast.LENGTH_SHORT).show();		
+	}
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		return false;
 	}
 
 } 
